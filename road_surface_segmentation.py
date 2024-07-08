@@ -27,7 +27,6 @@ import operator
 !rm -rf /content/Image/
 # %ls /content/Road_Surface_Classification/
 '''
-'''
 tf.compat.v1.disable_eager_execution()
 
 image_size=128
@@ -35,8 +34,8 @@ num_channels=3
 images = []
 
 outputFile = sys.argv[2]
-'''
 
+'''
 tf.compat.v1.disable_eager_execution()
 
 image_size=128
@@ -50,8 +49,8 @@ if len(sys.argv) != 3:
 
 input_video_path = sys.argv[1]
 output_video_path = sys.argv[2]
-
 '''
+
 # Opening frames
 cap = cv.VideoCapture(sys.argv[1])
 
@@ -61,8 +60,8 @@ width = int(round(cap.get(cv.CAP_PROP_FRAME_WIDTH)))
 height = int(round(cap.get(cv.CAP_PROP_FRAME_HEIGHT)))
 
 newHeight = int(round(height/2))
-'''
 
+'''
 # Opening frames
 cap = cv.VideoCapture(input_video_path)
 if not cap.isOpened():
@@ -78,8 +77,9 @@ if not vid_writer.isOpened():
 width = int(round(cap.get(cv.CAP_PROP_FRAME_WIDTH)))
 height = int(round(cap.get(cv.CAP_PROP_FRAME_HEIGHT)))
 newHeight = int(round(height / 2))
-
 '''
+
+
 # Restoring the model
 sess = tf.compat.v1.Session()
 saver = tf.compat.v1.train.import_meta_graph('/content/Road_Surface_Classification/roadsurface-model.meta')
@@ -89,8 +89,8 @@ if checkpoint:
   saver.restore(sess, checkpoint)
 else:
   print('No checkpoint found')
-'''
 
+'''
 # Restoring the model
 sess = tf.compat.v1.Session()
 saver = tf.compat.v1.train.import_meta_graph('/content/Road_Surface_Classification/roadsurface-model.meta')
@@ -101,8 +101,8 @@ if checkpoint:
 else:
   print('No checkpoint found')
   #sys.exit(1)
-
 '''
+
 # Acessing the graph
 graph = tf.compat.v1.get_default_graph()
 
@@ -142,20 +142,16 @@ while cv.waitKey(1) < 0:
 
     if index == 0:
         label = 'Asphalt'
-        #prob = str("{0:.2f}".format(value))
+        prob = str("{0:.2f}".format(value))
         color = (0, 0, 0)
     elif index == 1:
         label = 'Paved'
-        #prob = str("{0:.2f}".format(value))
+        prob = str("{0:.2f}".format(value))
         color = (153, 102, 102)
     elif index == 2:
         label = 'Unpaved'
-        #prob = str("{0:.2f}".format(value))
+        prob = str("{0:.2f}".format(value))
         color = (0, 153, 255)
-
-    # Display the road type classification result
-    prob = "{0:.2f}".format(value)
-    print(f"Detected road type: {label} with confidence {prob}")
 
     cv.rectangle(finalimg, (0, 0), (145, 40), (255, 255, 255), cv.FILLED)
     cv.putText(finalimg, 'Class: ', (5,15), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 1)
@@ -166,8 +162,8 @@ while cv.waitKey(1) < 0:
     vid_writer.write(finalimg.astype(np.uint8))
 
 sess.close()
-'''
 
+'''
 # Accessing the graph
 graph = tf.compat.v1.get_default_graph()
 y_pred = graph.get_tensor_by_name("y_pred:0")
@@ -231,7 +227,7 @@ while cv.waitKey(1) < 0:
 sess.close()
 cap.release()
 vid_writer.release()
-
+'''
 '''
 from google.colab import files
 files.download('/root/.local/share/jupyter/runtime/kernel-390d05bf-9d13-4112-b35e-d426eb725d5c.json')
