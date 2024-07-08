@@ -18,6 +18,7 @@ import os
 import glob
 import operator
 
+'''
 # Commented out IPython magic to ensure Python compatibility.
 # Download the dataset from GitHub
 !rm -rf /content/Image/
@@ -25,7 +26,7 @@ import operator
 !git clone https://github.com/Swagat18012001/Road_Surface_Classification.git
 !rm -rf /content/Image/
 # %ls /content/Road_Surface_Classification/
-
+'''
 '''
 tf.compat.v1.disable_eager_execution()
 
