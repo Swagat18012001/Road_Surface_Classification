@@ -33,6 +33,7 @@ image_size=128
 num_channels=3
 images = []
 
+inputFile = sys.argv[1]
 outputFile = sys.argv[2]
 
 '''
@@ -52,9 +53,17 @@ output_video_path = sys.argv[2]
 '''
 
 # Opening frames
-cap = cv.VideoCapture(sys.argv[1])
+cap = cv.VideoCapture(inputFile)
+if not cap.isOpened():
+    print(f"Error: Could not open video file {inputFile}")
+    sys.exit(1)
+
 
 vid_writer = cv.VideoWriter(outputFile, cv.VideoWriter_fourcc('M','J','P','G'), 15, (round(cap.get(cv.CAP_PROP_FRAME_WIDTH)),round(cap.get(cv.CAP_PROP_FRAME_HEIGHT))))
+
+if not vid_writer.isOpened():
+    print(f"Error: Could not write to output file {outputFile}")
+    sys.exit(1)
 
 width = int(round(cap.get(cv.CAP_PROP_FRAME_WIDTH)))
 height = int(round(cap.get(cv.CAP_PROP_FRAME_HEIGHT)))
@@ -89,6 +98,7 @@ if checkpoint:
   saver.restore(sess, checkpoint)
 else:
   print('No checkpoint found')
+  sys.exit(1)
 
 '''
 # Restoring the model
@@ -162,6 +172,8 @@ while cv.waitKey(1) < 0:
     vid_writer.write(finalimg.astype(np.uint8))
 
 sess.close()
+cap.release()
+vid_writer.release()
 
 '''
 # Accessing the graph
